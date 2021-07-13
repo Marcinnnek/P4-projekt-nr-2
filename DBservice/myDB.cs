@@ -67,7 +67,7 @@ namespace P4_projekt_nr_2.DBservice
             {
                 if (myDBconnection.State == ConnectionState.Closed)
                     myDBconnection.Open();
-                var result = myDBconnection.Execute(@"DELETE FROM BAN.Facility WHERE ID_Facility = @IDf)",
+                var result = myDBconnection.Execute(@"DELETE FROM BAN.Facility WHERE ID_Facility = @IDf",
                     new
                     {
                         IDf = ObiektIDf

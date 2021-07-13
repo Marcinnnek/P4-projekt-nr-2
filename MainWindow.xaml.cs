@@ -30,7 +30,6 @@ namespace P4_projekt_nr_2
             RefreshDataBase();
 
             IDCheckButtonEnabled();
-
         }
 
         private void IDCheckButtonEnabled()
@@ -57,15 +56,21 @@ namespace P4_projekt_nr_2
 
         private void DGFacilityList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            IDCheckButtonEnabled();
-
             Facility FC = DGFacilityList.SelectedItem as Facility;
+            if (FC == null)
+            {
+                RefreshDataBase();
+            }
+            else
+            {
+                FacilityID = FC.ID_Facility;
+                tbFacilityName.Text = FC.Facility_Name;
+                tbFacilityDescription.Text = FC.FacilityDescription;
+                tbSAP.Text = FC.SAP;
+                Console.WriteLine(FacilityID + "  " + FC.Facility_Name + "  " + FC.FacilityDescription + "  " + FC.SAP);
+            }
 
-            FacilityID = FC.ID_Facility;
-            tbFacilityName.Text = FC.Facility_Name;
-            tbFacilityDescription.Text = FC.FacilityDescription;
-            tbSAP.Text = FC.SAP;
-            Console.WriteLine(FacilityID+"  "+ FC.Facility_Name +"  "+ FC.FacilityDescription+"  "+ FC.SAP);
+            IDCheckButtonEnabled();
         }
 
 
@@ -103,28 +108,38 @@ namespace P4_projekt_nr_2
 
         private void Button_ClickInsertContent(object sender, RoutedEventArgs e)
         {
-            IDCheckButtonEnabled();
-            Facility myNUDFacility = new Facility()
+            if (DataCheckFacility() == true)
             {
-                ID_Facility = FacilityID,
-                Facility_Name = tbFacilityName.Text,
-                FacilityDescription = tbFacilityDescription.Text,
-                SAP = tbSAP.Text
-            };
+                IDCheckButtonEnabled();
+                Facility myNUDFacility = new Facility()
+                {
+                    ID_Facility = FacilityID,
+                    Facility_Name = tbFacilityName.Text,
+                    FacilityDescription = tbFacilityDescription.Text,
+                    SAP = tbSAP.Text
+                };
 
-            myDB getObjects = new myDB();
-            getObjects.InsterFacility(myNUDFacility);
-            MessageBox.Show("Dodano nowy obiekt!", "Obiekt budowlany");
-            RefreshDataBase();
+                myDB getObjects = new myDB();
+                getObjects.InsterFacility(myNUDFacility);
+                MessageBox.Show("Dodano nowy obiekt!", "Dodawanie");
+                RefreshDataBase();
+            }
+            else
+                MessageBox.Show("Sprawdź poprawność danych!");
         }
 
         private void Button_Click_DeleteContent(object sender, RoutedEventArgs e)
         {
-            IDCheckButtonEnabled();
-            myDB getObjects = new myDB();
-            getObjects.DeleteFacility(FacilityID);
-            MessageBox.Show("Usunięto obiekt!", "Obiekt budowlany");
-            RefreshDataBase();
+            if (DataCheckFacility() == true)
+            {
+                IDCheckButtonEnabled();
+                myDB getObjects = new myDB();
+                getObjects.DeleteFacility(FacilityID);
+                MessageBox.Show("Usunięto obiekt!", "Usuwanie");
+                RefreshDataBase();
+            }
+            else
+                MessageBox.Show("Sprawdź poprawność danych!");
         }
 
         private void btUpdateContent_Click(object sender, RoutedEventArgs e)
@@ -140,8 +155,23 @@ namespace P4_projekt_nr_2
 
             myDB getObjects = new myDB();
             getObjects.UpdateFacility(myNUDFacility);
-            MessageBox.Show("Uaktualniono obiekt!", "Obiekt budowlany");
+            MessageBox.Show("Uaktualniono obiekt!", "Aktualizacja");
             RefreshDataBase();
+        }
+
+        private bool DataCheckFacility()
+        {
+            if (tbFacilityName.Text.Length <= 3)
+            {
+                MessageBox.Show("Za krótka nazwa obiektu (min 3 znaki)", "Dane");
+                return false;
+            }
+            else if (tbSAP.Text.Length != 8)
+            {
+                MessageBox.Show("Niepoprawny kod SAP (8 znaków)", "Dane");
+                return false;
+            }
+            return true;
         }
     }
 }

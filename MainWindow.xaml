@@ -25,7 +25,7 @@
 
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbFacilityName" Text="Podaj nazwę obektu!" GotFocus="TB_GetFocus_FacilityName" HorizontalAlignment="Stretch" Margin="10,10,110,0" MaxLength="30" TextAlignment="Right" />
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbFacilityDescription" Text="Podaj krótki opis obiektu!" GotFocus="TB_GetFocus_FacilityDescription" HorizontalAlignment="Stretch" Margin="10,10,110,0" MaxLength="255" TextAlignment="Left" TextWrapping="Wrap"/>
-            <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbSAP" Text="Podaj kod identyfikacyjny SAP kontraktu!" GotFocus="TB_GetFocus_SAP" HorizontalAlignment="Stretch" Margin="10,10,110,0" MaxLength="10" TextAlignment="Right"/>
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbSAP" Text="Podaj kod identyfikacyjny SAP kontraktu!" GotFocus="TB_GetFocus_SAP" HorizontalAlignment="Stretch" Margin="10,10,110,0" MaxLength="8" TextAlignment="Right"/>
 
             <StackPanel Grid.Column="2" Grid.RowSpan="2">
                 <Button x:Name="btAddContent" Content="Dodaj obiekt" Margin="10,10,10,5" HorizontalAlignment="Stretch" Click="Button_ClickInsertContent"/>
@@ -39,7 +39,7 @@
             </StackPanel>
 
 
-            <Label Grid.Row="3" Grid.ColumnSpan="2" x:Name ="lTableName" Content="Lista obiektów:" HorizontalAlignment="Center"/>
+            <Label Grid.Row="3" Grid.ColumnSpan="2" x:Name ="lTableName" Content="Lista obiektów (kliknij aby wybrać pozycje):" HorizontalAlignment="Center"/>
             <DataGrid Grid.Row="3" Grid.ColumnSpan="2" Margin="10,25,10,10" x:Name="DGFacilityList" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionUnit="FullRow" SelectionChanged="DGFacilityList_SelectionChanged" IsReadOnly="True" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID_Facility}" Width="40"/>
