@@ -21,15 +21,55 @@ namespace P4_projekt_nr_2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int ID_Facility = 0;
+        private int FacilityID = 0;
+
 
         public MainWindow()
         {
             InitializeComponent();
-            myDB getObjects = new myDB();
-            DGFacilityList.DataContext = getObjects.GetFacilities();
+            RefreshDataBase();
+
+            IDCheckButtonEnabled();
 
         }
+
+        private void IDCheckButtonEnabled()
+        {
+            if (FacilityID == 0)
+            {
+                btDeleteContent.IsEnabled = false;
+                btUpdateContent.IsEnabled = false;
+                btSelectObject.IsEnabled = false;
+            }
+            else
+            {
+                btDeleteContent.IsEnabled = true;
+                btUpdateContent.IsEnabled = true;
+                btSelectObject.IsEnabled = true;
+            }
+        }
+
+        private void RefreshDataBase()
+        {
+            myDB getObjects = new myDB();
+            DGFacilityList.DataContext = getObjects.GetFacilities();
+        }
+
+        private void DGFacilityList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            IDCheckButtonEnabled();
+
+            Facility FC = DGFacilityList.SelectedItem as Facility;
+
+            FacilityID = FC.ID_Facility;
+            tbFacilityName.Text = FC.Facility_Name;
+            tbFacilityDescription.Text = FC.FacilityDescription;
+            tbSAP.Text = FC.SAP;
+            Console.WriteLine(FacilityID+"  "+ FC.Facility_Name +"  "+ FC.FacilityDescription+"  "+ FC.SAP);
+        }
+
+
+
 
         public void TB_GetFocus_FacilityName(object sender, RoutedEventArgs e)
         {
@@ -61,14 +101,47 @@ namespace P4_projekt_nr_2
             }
         }
 
-        private void tbFacilityDescription_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Button_ClickInsertContent(object sender, RoutedEventArgs e)
         {
-            if (tbFacilityName.Text == "Podaj krótki opis obiektu!")
+            IDCheckButtonEnabled();
+            Facility myNUDFacility = new Facility()
             {
-                TextBox tbFacilityDescription = (TextBox)sender;
-                tbFacilityDescription.Text = string.Empty;
-                tbFacilityDescription.GotFocus -= TB_GetFocus_FacilityDescription;
-            }
+                ID_Facility = FacilityID,
+                Facility_Name = tbFacilityName.Text,
+                FacilityDescription = tbFacilityDescription.Text,
+                SAP = tbSAP.Text
+            };
+
+            myDB getObjects = new myDB();
+            getObjects.InsterFacility(myNUDFacility);
+            MessageBox.Show("Dodano nowy obiekt!", "Obiekt budowlany");
+            RefreshDataBase();
+        }
+
+        private void Button_Click_DeleteContent(object sender, RoutedEventArgs e)
+        {
+            IDCheckButtonEnabled();
+            myDB getObjects = new myDB();
+            getObjects.DeleteFacility(FacilityID);
+            MessageBox.Show("Usunięto obiekt!", "Obiekt budowlany");
+            RefreshDataBase();
+        }
+
+        private void btUpdateContent_Click(object sender, RoutedEventArgs e)
+        {
+            IDCheckButtonEnabled();
+            Facility myNUDFacility = new Facility()
+            {
+                ID_Facility = FacilityID,
+                Facility_Name = tbFacilityName.Text,
+                FacilityDescription = tbFacilityDescription.Text,
+                SAP = tbSAP.Text
+            };
+
+            myDB getObjects = new myDB();
+            getObjects.UpdateFacility(myNUDFacility);
+            MessageBox.Show("Uaktualniono obiekt!", "Obiekt budowlany");
+            RefreshDataBase();
         }
     }
 }
