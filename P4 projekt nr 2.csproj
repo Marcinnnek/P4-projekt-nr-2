@@ -77,6 +77,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DBservice\BoltType.cs" />
+    <Compile Include="DBservice\DiameterType.cs" />
+    <Compile Include="DBservice\LenghtType.cs" />
+    <Compile Include="DBservice\NutType.cs" />
+    <Compile Include="DBservice\WasherType.cs" />
+    <Compile Include="WindowBillOfMaterials.xaml.cs">
+      <DependentUpon>WindowBillOfMaterials.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -91,6 +99,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="WindowBillOfMaterials.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -76,5 +76,55 @@ namespace P4_projekt_nr_2.DBservice
                 return result == 1;
             }
         }
+
+
+
+        public IEnumerable<BoltType> GetBoltType()
+        {
+            using (myDBconnection)
+            {
+                if (myDBconnection.State == ConnectionState.Closed)
+                    myDBconnection.Open();
+                return myDBconnection.Query<BoltType>("SELECT * FROM BAN.BoltType").ToList();
+            }
+        }
+
+        public IEnumerable<LenghtType> GetLenghtType()
+        {
+            using (myDBconnection)
+            {
+                if (myDBconnection.State == ConnectionState.Closed)
+                    myDBconnection.Open();
+                return myDBconnection.Query<LenghtType>("SELECT * FROM BAN.LenghtType").ToList();
+            }
+        }
+        public IEnumerable<DiameterType> GetDiameterType()
+        {
+            using (myDBconnection)
+            {
+                if (myDBconnection.State == ConnectionState.Closed)
+                    myDBconnection.Open();
+                return myDBconnection.Query<DiameterType>("SELECT * FROM BAN.DiameterType").ToList();
+            }
+        }
+
+        public IEnumerable<NutType> GetNutType()
+        {
+            using (myDBconnection)
+            {
+                if (myDBconnection.State == ConnectionState.Closed)
+                    myDBconnection.Open();
+                return myDBconnection.Query<NutType>("SELECT * FROM BAN.NutType").ToList();
+            }
+        }
+        public IEnumerable<WasherType> GetWasherType()
+        {
+            using (myDBconnection)
+            {
+                if (myDBconnection.State == ConnectionState.Closed)
+                    myDBconnection.Open();
+                return myDBconnection.Query<WasherType>("SELECT * FROM BAN.WasherType").ToList();
+            }
+        }
     }
 }

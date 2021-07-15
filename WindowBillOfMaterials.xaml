@@ -1,0 +1,44 @@
+﻿<Window x:Class="P4_projekt_nr_2.WindowBillOfMaterials"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P4_projekt_nr_2"
+        mc:Ignorable="d"
+        Title="WindowBillOfMaterials" Height="500" Width="800" MinWidth="700" MinHeight="475">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="220"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <DataGrid Margin="5,5,0,5">
+        </DataGrid>
+                <StackPanel Grid.Column="2" >
+            <Button x:Name="btAddPosition" Content="Dodaj pozycje" Margin="10,5,10,5" HorizontalAlignment="Stretch"/>
+            <Button x:Name="btUpdatePosition" Content="Modyfikuj pozycje" Margin="10,5,10,5" HorizontalAlignment="Stretch"/>
+            <Button x:Name="btDeletePosition" Content="Usuń pozycje" Margin="10,5,10,30" HorizontalAlignment="Stretch"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbJointName" Text="Podaj nazwę połączenia!" HorizontalAlignment="Stretch" Margin="10,5,10,0" MaxLength="25" TextAlignment="Right" />
+            <ComboBox Margin="10,5,10,5" x:Name="cbBoltType" DisplayMemberPath="BoltStandard" SelectedValuePath="ID_Bolt" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
+            <ComboBox Margin="10,5,10,5" x:Name="cbDiameterType" DisplayMemberPath="Diameter" SelectedValuePath="ID_Diameter" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
+            <ComboBox Margin="10,5,10,5" x:Name="cbLenghtType" DisplayMemberPath="BoltStandard" SelectedValuePath="ID_Bolt" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
+            <ComboBox Margin="10,5,10,5" x:Name="cbNutType" DisplayMemberPath="BoltStandard" SelectedValuePath="ID_Bolt" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
+            <ComboBox Margin="10,5,10,5" x:Name="cbWasherFirstType" DisplayMemberPath="BoltStandard" SelectedValuePath="ID_Bolt" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
+            <ComboBox Margin="10,5,10,5" x:Name="cbWasherSecondType" DisplayMemberPath="BoltStandard" SelectedValuePath="ID_Bolt" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
+            <ComboBox Margin="10,5,10,5" x:Name="cbWasherThirdType" DisplayMemberPath="BoltStandard" SelectedValuePath="ID_Bolt" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
+
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbNumberOFSteelJoints" Text="Ile jest zestawów w połączeniu?" HorizontalAlignment="Stretch" Margin="10,5,10,5" MaxLength="25" TextAlignment="Right" />
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbPiecesOfSteelJoints" Text="Ile jest połączeń?" HorizontalAlignment="Stretch" Margin="10,5,10,10" MaxLength="25" TextAlignment="Right" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" VerticalAlignment="Bottom">
+
+            <Button x:Name="btReturn" Content="Wróć" Margin="10,20,10,5" HorizontalAlignment="Stretch"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

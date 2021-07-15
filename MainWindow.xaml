@@ -34,7 +34,7 @@
             </StackPanel>
 
             <StackPanel VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="2" >
-                <Button x:Name="btSelectObject" Content="Wybierz obiekt" Margin="10,10,10,5" HorizontalAlignment="Stretch"/>
+                <Button x:Name="btSelectObject" Content="Wybierz obiekt" Margin="10,10,10,5" HorizontalAlignment="Stretch" Click="btSelectObject_Click"/>
                 <Button x:Name="btExit" Content="Wyjście" Margin="10,10,10,5"  HorizontalAlignment="Stretch"/>
             </StackPanel>
 

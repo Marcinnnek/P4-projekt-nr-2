@@ -173,5 +173,13 @@ namespace P4_projekt_nr_2
             }
             return true;
         }
+
+        private void btSelectObject_Click(object sender, RoutedEventArgs e)
+        {
+            WindowBillOfMaterials newWindowBOM = new WindowBillOfMaterials();
+            this.Visibility = Visibility.Hidden;
+            newWindowBOM.Show();
+
+        }
     }
 }
