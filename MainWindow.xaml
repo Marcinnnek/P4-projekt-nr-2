@@ -46,7 +46,6 @@
                     <DataGridTextColumn Header="Nazwa obiektu" Binding="{Binding Facility_Name}" Width="120" />
                     <DataGridTextColumn Header="Opis obiektu" Binding="{Binding FacilityDescription}" Width="*" />
                     <DataGridTextColumn Header="Kod SAP" Binding="{Binding SAP}" Width="80" />
-
                 </DataGrid.Columns>
             </DataGrid>
 

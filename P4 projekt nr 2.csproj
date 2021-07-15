@@ -77,7 +77,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataTransfer.cs" />
+    <Compile Include="DBservice\BillOfMaterials.cs" />
     <Compile Include="DBservice\BoltType.cs" />
+    <Compile Include="DBservice\BillOfMaterialsCombo.cs" />
     <Compile Include="DBservice\DiameterType.cs" />
     <Compile Include="DBservice\LenghtType.cs" />
     <Compile Include="DBservice\NutType.cs" />

@@ -126,5 +126,24 @@ namespace P4_projekt_nr_2.DBservice
                 return myDBconnection.Query<WasherType>("SELECT * FROM BAN.WasherType").ToList();
             }
         }
+
+        public IEnumerable<BillOfMaterialsCombo> GetBillOfMaterials(int IDfacility)
+        {
+            using (myDBconnection)
+            {
+                if (myDBconnection.State == ConnectionState.Closed)
+                    myDBconnection.Open();
+                return myDBconnection.Query<BillOfMaterialsCombo>(@"SELECT*
+                                                                    FROM BAN.BillOfMaterials AS BOM 
+                                                                    INNER JOIN BAN.BoltType AS BT ON BOM.ID_Bolt=BT.ID_Bolt
+                                                                    INNER JOIN BAN.LenghtType AS LT ON BOM.ID_Lenght=LT.ID_Lenght
+                                                                    INNER JOIN BAN.DiameterType AS DT ON BOM.ID_Diameter=DT.ID_Diameter
+                                                                    INNER JOIN BAN.NutType AS NT ON BOM.ID_Nut=NT.ID_Nut
+                                                                    INNER JOIN BAN.WasherType AS WTF ON BOM.BoltWasherFirst=WTF.ID_Washer
+                                                                    INNER JOIN BAN.WasherType AS WTS ON BOM.BoltWasherSecond=WTS.ID_Washer
+                                                                    INNER JOIN BAN.WasherType AS WTT ON BOM.BoltWasherThird=WTT.ID_Washer
+                                                                    WHERE BOM.ID_Facility=@IDf", new { IDf = IDfacility}).ToList();
+            }
+        }
     }
 }

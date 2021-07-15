@@ -21,7 +21,7 @@ namespace P4_projekt_nr_2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int FacilityID = 0;
+        private static int FacilityID = 0;
 
 
         public MainWindow()
@@ -30,7 +30,9 @@ namespace P4_projekt_nr_2
             RefreshDataBase();
 
             IDCheckButtonEnabled();
+
         }
+
 
         private void IDCheckButtonEnabled()
         {
@@ -176,8 +178,10 @@ namespace P4_projekt_nr_2
 
         private void btSelectObject_Click(object sender, RoutedEventArgs e)
         {
+            DataTransfer.IDFacilityDT = FacilityID;
             WindowBillOfMaterials newWindowBOM = new WindowBillOfMaterials();
             this.Visibility = Visibility.Hidden;
+            Console.WriteLine(FacilityID);
             newWindowBOM.Show();
 
         }
