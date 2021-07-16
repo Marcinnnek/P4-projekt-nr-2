@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -132,11 +133,18 @@ namespace P4_projekt_nr_2
 
         private void Button_Click_DeleteContent(object sender, RoutedEventArgs e)
         {
-            IDCheckButtonEnabled();
-            myDB getObjects = new myDB();
-            getObjects.DeleteFacility(FacilityID);
-            MessageBox.Show("Usunięto obiekt!", "Usuwanie");
-            RefreshDataBase();
+            try
+            {
+                IDCheckButtonEnabled();
+                myDB getObjects = new myDB();
+                getObjects.DeleteFacility(FacilityID);
+                MessageBox.Show("Usunięto obiekt!", "Usuwanie");
+                RefreshDataBase();
+            }
+            catch 
+            {
+                MessageBox.Show("Nie można usunąć obiektu z zestawieniem!");
+            }
         }
 
         private void btUpdateContent_Click(object sender, RoutedEventArgs e)
@@ -161,6 +169,7 @@ namespace P4_projekt_nr_2
 
         private bool DataCheckFacility()
         {
+
             if (tbFacilityName.Text.Length <= 3)
             {
                 MessageBox.Show("Za krótka nazwa obiektu (min 3 znaki)", "Dane");
@@ -172,6 +181,8 @@ namespace P4_projekt_nr_2
                 return false;
             }
             return true;
+
+
         }
 
         private void btSelectObject_Click(object sender, RoutedEventArgs e)
