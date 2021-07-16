@@ -70,8 +70,8 @@
         <ComboBox Grid.Row="7" Grid.Column="2" Margin="10,5,10,5" x:Name="cbWasherSecondType" DisplayMemberPath="WasherStandard" SelectedValuePath="ID_Washer" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
         <ComboBox Grid.Row="8" Grid.Column="2" Margin="10,5,10,5" x:Name="cbWasherThirdType" DisplayMemberPath="WasherStandard" SelectedValuePath="ID_Washer" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
 
-        <TextBox Grid.Row="9" Grid.Column="2" x:Name="tbNumberOFSteelJoints" Text="Ile jest zestawów w połączeniu?" HorizontalAlignment="Stretch" Margin="10,5,10,5" MaxLength="25" TextAlignment="Right" PreviewTextInput="AllowOnlyNumdersValidation" GotFocus="TB_GetFocus_NumberOFSteelJoints" DataObject.Pasting="TextBoxPasting"/>
-        <TextBox Grid.Row="10" Grid.Column="2" x:Name="tbPiecesOfSteelJoints" Text="Ile jest połączeń?" HorizontalAlignment="Stretch" Margin="10,5,10,10" MaxLength="25" TextAlignment="Right" PreviewTextInput="AllowOnlyNumdersValidation"  GotFocus="TB_GetFocus_tbPiecesOfSteelJoints" DataObject.Pasting="TextBoxPasting"/>
+        <TextBox Grid.Row="9" Grid.Column="2" x:Name="tbNumberOFSteelJoints" Text="Ile jest zestawów w połączeniu?" HorizontalAlignment="Stretch" Margin="10,5,10,5" MaxLength="2" TextAlignment="Right" PreviewTextInput="AllowOnlyNumdersValidation" GotFocus="TB_GetFocus_NumberOFSteelJoints" DataObject.Pasting="TextBoxPasting"/>
+        <TextBox Grid.Row="10" Grid.Column="2" x:Name="tbPiecesOfSteelJoints" Text="Ile jest połączeń?" HorizontalAlignment="Stretch" Margin="10,5,10,10" MaxLength="3" TextAlignment="Right" PreviewTextInput="AllowOnlyNumdersValidation"  GotFocus="TB_GetFocus_tbPiecesOfSteelJoints" DataObject.Pasting="TextBoxPasting"/>
 
 
         <StackPanel Grid.Row="11" Grid.Column="2" VerticalAlignment="Bottom">
