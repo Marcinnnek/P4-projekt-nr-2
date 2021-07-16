@@ -30,7 +30,7 @@ namespace P4_projekt_nr_2.DBservice
             {
                 if (myDBconnection.State == ConnectionState.Closed)
                     myDBconnection.Open();
-                var result = myDBconnection.Execute("INSERT INTO BAN.Facility (Facility_Name, FacilityDescription, SAP) VALUES ( @Name, @DESCRIPTION, @SAP)",
+                var result = myDBconnection.Execute(@"INSERT INTO BAN.Facility (Facility_Name, FacilityDescription, SAP) VALUES ( @Name, @DESCRIPTION, @SAP)",
                     new
                     {
                         Name = ObiektB.Facility_Name,
@@ -48,7 +48,7 @@ namespace P4_projekt_nr_2.DBservice
             {
                 if (myDBconnection.State == ConnectionState.Closed)
                     myDBconnection.Open();
-                var result = myDBconnection.Execute("UPDATE BAN.Facility SET Facility_Name = @Name , FacilityDescription = @Description, SAP = @Sap WHERE ID_Facility = @IDf",
+                var result = myDBconnection.Execute(@"UPDATE BAN.Facility SET Facility_Name = @Name , FacilityDescription = @Description, SAP = @Sap WHERE ID_Facility = @IDf",
                     new
                     {
                         IDf = ObiektB.ID_Facility,
@@ -133,7 +133,28 @@ namespace P4_projekt_nr_2.DBservice
             {
                 if (myDBconnection.State == ConnectionState.Closed)
                     myDBconnection.Open();
-                return myDBconnection.Query<BillOfMaterialsCombo>(@"SELECT*
+                //potrzeba wybrania poszczególnych kolumn i nadania im aliasów
+                return myDBconnection.Query<BillOfMaterialsCombo>(@"SELECT 
+                                                                    BOM.ID_SteelJoint AS ID_SteelJoint,
+                                                                    BOM.ID_Facility AS ID_Facility,
+                                                                    BOM.JointName AS JointName,
+                                                                    BOM.ID_Bolt AS ID_Bolt,
+                                                                    BOM.ID_Diameter AS ID_Diameter,
+                                                                    BOM.ID_Lenght AS ID_Lenght,
+                                                                    BOM.BoltWasherFirst AS BoltWasherFirst,
+                                                                    BOM.BoltWasherSecond AS BoltWasherSecond,
+                                                                    BOM.BoltWasherThird AS BoltWasherThird,
+                                                                    BOM.ID_Nut AS ID_Nut,
+                                                                    BOM.NumberOfSteelJoint AS NumberOfSteelJoint,
+                                                                    BOM.PiecesOfSteelJoint AS PiecesOfSteelJoint,
+                                                                    WTF.WasherStandard AS WasherStandardWTF,
+                                                                    WTS.WasherStandard AS WasherStandardWTS,
+                                                                    WTT.WasherStandard AS WasherStandardWTT,
+                                                                    BT.BoltStandard AS BoltStandard,
+                                                                    DT.Diameter AS Diameter,
+                                                                    LT.BoltLenght AS BoltLenght,
+                                                                    NT.NutStandard AS NutStandard
+
                                                                     FROM BAN.BillOfMaterials AS BOM 
                                                                     INNER JOIN BAN.BoltType AS BT ON BOM.ID_Bolt=BT.ID_Bolt
                                                                     INNER JOIN BAN.LenghtType AS LT ON BOM.ID_Lenght=LT.ID_Lenght
@@ -142,7 +163,7 @@ namespace P4_projekt_nr_2.DBservice
                                                                     INNER JOIN BAN.WasherType AS WTF ON BOM.BoltWasherFirst=WTF.ID_Washer
                                                                     INNER JOIN BAN.WasherType AS WTS ON BOM.BoltWasherSecond=WTS.ID_Washer
                                                                     INNER JOIN BAN.WasherType AS WTT ON BOM.BoltWasherThird=WTT.ID_Washer
-                                                                    WHERE BOM.ID_Facility=@IDf", new { IDf = IDfacility }).ToList();
+                                                                    WHERE BOM.ID_Facility =@IDf", new { IDf = IDfacility }).ToList();
             }
         }
 
@@ -180,9 +201,61 @@ namespace P4_projekt_nr_2.DBservice
                         IDn = pos.ID_Nut,
                         NOSJ = pos.NumberOfSteelJoint,
                         POSJ = pos.PiecesOfSteelJoint
-                        //Name = ObiektB.Facility_Name,
-                        //DESCRIPTION = ObiektB.FacilityDescription,
-                        //SAP = ObiektB.SAP
+                    });
+
+                return result == 1;
+            }
+        }
+
+
+        public bool UpdatePosition(BillOfMaterials positionUpdate)
+        {
+            using (IDbConnection dbConnection = myDBconnection)
+            {
+                if (myDBconnection.State == ConnectionState.Closed)
+                    myDBconnection.Open();
+                var result = myDBconnection.Execute(@"UPDATE BAN.BillOfMaterials SET 
+                                                    JointName = @jName, 
+                                                    ID_Bolt = @IDb, 
+                                                    ID_Diameter = @IDd, 
+                                                    ID_Lenght = @IDl, 
+                                                    BoltWasherFirst = @IDbwf, 
+                                                    BoltWasherSecond = @IDbws,
+                                                    BoltWasherThird = @IDbwt,
+                                                    ID_Nut = @IDn,
+                                                    NumberOfSteelJoint = @NOSJ,
+                                                    PiecesOfSteelJoint = @POSJ
+                                                    WHERE ID_SteelJoint = @IDsj",
+
+                    new
+                    {
+                        IDsj = positionUpdate.ID_SteelJoint,
+                        jName = positionUpdate.JointName,
+                        IDb = positionUpdate.ID_Bolt,
+                        IDd = positionUpdate.ID_Diameter,
+                        IDl = positionUpdate.ID_Lenght,
+                        IDbwf = positionUpdate.BoltWasherFirst,
+                        IDbws = positionUpdate.BoltWasherSecond,
+                        IDbwt = positionUpdate.BoltWasherThird,
+                        IDn = positionUpdate.ID_Nut,
+                        NOSJ = positionUpdate.NumberOfSteelJoint,
+                        POSJ = positionUpdate.PiecesOfSteelJoint
+                    });
+
+                return result == 1;
+            }
+        }
+
+        public bool DeletePosition(int ObiektIDf)
+        {
+            using (IDbConnection dbConnection = myDBconnection)
+            {
+                if (myDBconnection.State == ConnectionState.Closed)
+                    myDBconnection.Open();
+                var result = myDBconnection.Execute(@"DELETE FROM BAN.BillOfMaterials WHERE ID_SteelJoint = @IDsj",
+                    new
+                    {
+                        IDsj = ObiektIDf
                     });
 
                 return result == 1;

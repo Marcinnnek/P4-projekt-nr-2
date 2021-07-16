@@ -132,32 +132,30 @@ namespace P4_projekt_nr_2
 
         private void Button_Click_DeleteContent(object sender, RoutedEventArgs e)
         {
-            if (DataCheckFacility() == true)
-            {
-                IDCheckButtonEnabled();
-                myDB getObjects = new myDB();
-                getObjects.DeleteFacility(FacilityID);
-                MessageBox.Show("Usunięto obiekt!", "Usuwanie");
-                RefreshDataBase();
-            }
-            else
-                MessageBox.Show("Sprawdź poprawność danych!");
+            IDCheckButtonEnabled();
+            myDB getObjects = new myDB();
+            getObjects.DeleteFacility(FacilityID);
+            MessageBox.Show("Usunięto obiekt!", "Usuwanie");
+            RefreshDataBase();
         }
 
         private void btUpdateContent_Click(object sender, RoutedEventArgs e)
         {
-            IDCheckButtonEnabled();
-            Facility myNUDFacility = new Facility()
+            if (DataCheckFacility() == true)
             {
-                ID_Facility = FacilityID,
-                Facility_Name = tbFacilityName.Text,
-                FacilityDescription = tbFacilityDescription.Text,
-                SAP = tbSAP.Text
-            };
-
-            myDB getObjects = new myDB();
-            getObjects.UpdateFacility(myNUDFacility);
-            MessageBox.Show("Uaktualniono obiekt!", "Aktualizacja");
+                IDCheckButtonEnabled();
+                Facility myNUDFacility = new Facility()
+                {
+                    ID_Facility = FacilityID,
+                    Facility_Name = tbFacilityName.Text,
+                    FacilityDescription = tbFacilityDescription.Text,
+                    SAP = tbSAP.Text
+                };
+                myDB getObjects = new myDB();
+                getObjects.UpdateFacility(myNUDFacility);
+            }
+            else
+                MessageBox.Show("Uaktualniono obiekt!", "Aktualizacja");
             RefreshDataBase();
         }
 
@@ -184,6 +182,11 @@ namespace P4_projekt_nr_2
             Console.WriteLine(FacilityID);
             newWindowBOM.Show();
 
+        }
+
+        private void btExit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

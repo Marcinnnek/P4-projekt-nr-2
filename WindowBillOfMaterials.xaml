@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:P4_projekt_nr_2"
         mc:Ignorable="d"
-        Title="WindowBillOfMaterials" Height="500" Width="1100" MinWidth="700" MinHeight="475">
+        Closing="DataWindow_Closing" 
+        Title="Zestawienie" Height="500" Width="1100" MinWidth="700" MinHeight="475">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -27,15 +28,15 @@
             <ColumnDefinition Width="180"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <DataGrid x:Name="DGPositionList"  Grid.RowSpan="12" Margin="5,5,0,5" Height="Auto" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionUnit="FullRow" SelectionChanged="DGPositionList_SelectionChanged" IsReadOnly="True">
+        <DataGrid x:Name="DGPositionList"  Grid.RowSpan="12" Margin="5,5,0,5" Height="Auto" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionUnit="FullRow" SelectionChanged="DGPositionList_SelectionChanged" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nazwa połączenia" Binding="{Binding JointName}" Width="*"/>
                 <DataGridTextColumn Header="Śruba" Binding="{Binding BoltStandard}"/>
                 <DataGridTextColumn Header="Średnica" Binding="{Binding Diameter}" />
                 <DataGridTextColumn Header="Długość" Binding="{Binding BoltLenght}"/>
-                <DataGridTextColumn Header="Podkładka -1-" Binding="{Binding Path=BoltWasherFirst.WasherStandard}" />
-                <DataGridTextColumn Header="Podkładka -2-" Binding="{Binding WasherStandard}" />
-                <DataGridTextColumn Header="Podkładka -3-" Binding="{Binding WasherStandard}" />
+                <DataGridTextColumn Header="Podkładka -1-" Binding="{Binding WasherStandardWTF}" />
+                <DataGridTextColumn Header="Podkładka -2-" Binding="{Binding WasherStandardWTS}" />
+                <DataGridTextColumn Header="Podkładka -3-" Binding="{Binding WasherStandardWTT}" />
                 <DataGridTextColumn Header="Nakrętka" Binding="{Binding NutStandard}"/>
                 <DataGridTextColumn Header="Zestawy" Binding="{Binding NumberOfSteelJoint}" />
                 <DataGridTextColumn Header="Połączenia" Binding="{Binding PiecesOfSteelJoint}" />
@@ -55,8 +56,8 @@
 
         <StackPanel Grid.Row="0" Grid.Column="2" >
             <Button x:Name="btAddPosition" Content="Dodaj pozycje" Margin="10,5,10,5" HorizontalAlignment="Stretch" Click="btAddPosition_Click"/>
-            <Button x:Name="btUpdatePosition" Content="Modyfikuj pozycje" Margin="10,5,10,5" HorizontalAlignment="Stretch"/>
-            <Button x:Name="btDeletePosition" Content="Usuń pozycje" Margin="10,5,10,30" HorizontalAlignment="Stretch"/>
+            <Button x:Name="btUpdatePosition" Content="Modyfikuj pozycje" Margin="10,5,10,5" HorizontalAlignment="Stretch" Click="btUpdatePosition_Click"/>
+            <Button x:Name="btDeletePosition" Content="Usuń pozycje" Margin="10,5,10,30" HorizontalAlignment="Stretch" Click="btDeletePosition_Click"/>
         </StackPanel>
 
 
@@ -69,13 +70,13 @@
         <ComboBox Grid.Row="7" Grid.Column="2" Margin="10,5,10,5" x:Name="cbWasherSecondType" DisplayMemberPath="WasherStandard" SelectedValuePath="ID_Washer" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
         <ComboBox Grid.Row="8" Grid.Column="2" Margin="10,5,10,5" x:Name="cbWasherThirdType" DisplayMemberPath="WasherStandard" SelectedValuePath="ID_Washer" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
 
-        <TextBox Grid.Row="9" Grid.Column="2" x:Name="tbNumberOFSteelJoints" Text="Ile jest zestawów w połączeniu?" HorizontalAlignment="Stretch" Margin="10,5,10,5" MaxLength="25" TextAlignment="Right" />
-        <TextBox Grid.Row="10" Grid.Column="2" x:Name="tbPiecesOfSteelJoints" Text="Ile jest połączeń?" HorizontalAlignment="Stretch" Margin="10,5,10,10" MaxLength="25" TextAlignment="Right" />
+        <TextBox Grid.Row="9" Grid.Column="2" x:Name="tbNumberOFSteelJoints" Text="Ile jest zestawów w połączeniu?" HorizontalAlignment="Stretch" Margin="10,5,10,5" MaxLength="25" TextAlignment="Right" PreviewTextInput="AllowOnlyNumdersValidation" GotFocus="TB_GetFocus_NumberOFSteelJoints" DataObject.Pasting="TextBoxPasting"/>
+        <TextBox Grid.Row="10" Grid.Column="2" x:Name="tbPiecesOfSteelJoints" Text="Ile jest połączeń?" HorizontalAlignment="Stretch" Margin="10,5,10,10" MaxLength="25" TextAlignment="Right" PreviewTextInput="AllowOnlyNumdersValidation"  GotFocus="TB_GetFocus_tbPiecesOfSteelJoints" DataObject.Pasting="TextBoxPasting"/>
 
 
         <StackPanel Grid.Row="11" Grid.Column="2" VerticalAlignment="Bottom">
 
-            <Button x:Name="btReturn" Content="Wróć" Margin="10,5,10,10" HorizontalAlignment="Stretch"/>
+            <Button x:Name="btReturn" Content="Wróć" Margin="10,5,10,10" HorizontalAlignment="Stretch" Click="btReturn_Click"/>
 
         </StackPanel>
     </Grid>

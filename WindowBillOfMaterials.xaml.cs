@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +23,7 @@ namespace P4_projekt_nr_2
     public partial class WindowBillOfMaterials : Window
     {
         private int SelectedIDSteelJoint = 0;
+        Regex regex = new Regex("[^0-9]+");
         public WindowBillOfMaterials()
         {
             InitializeComponent();
@@ -47,6 +50,45 @@ namespace P4_projekt_nr_2
             {
                 btDeletePosition.IsEnabled = true;
                 btUpdatePosition.IsEnabled = true;
+            }
+        }
+
+        private void AllowOnlyNumdersValidation(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        public void TB_GetFocus_NumberOFSteelJoints(object sender, RoutedEventArgs e)
+        {
+            if (tbNumberOFSteelJoints.Text == "Ile jest zestawów w połączeniu?")
+            {
+                TextBox tbNumberOFSteelJoints = (TextBox)sender;
+                tbNumberOFSteelJoints.Text = string.Empty;
+                tbNumberOFSteelJoints.GotFocus -= TB_GetFocus_NumberOFSteelJoints;
+            }
+        }
+
+        public void TB_GetFocus_tbPiecesOfSteelJoints(object sender, RoutedEventArgs e)
+        {
+            if (tbPiecesOfSteelJoints.Text == "Ile jest połączeń?")
+            {
+                TextBox tbPiecesOfSteelJoints = (TextBox)sender;
+                tbPiecesOfSteelJoints.Text = string.Empty;
+                tbPiecesOfSteelJoints.GotFocus -= TB_GetFocus_tbPiecesOfSteelJoints;
+            }
+        }
+        private void TextBoxPasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(String)))
+            {
+                String text = (String)e.DataObject.GetData(typeof(String));
+                if (regex.IsMatch(text))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
             }
         }
 
@@ -152,12 +194,12 @@ namespace P4_projekt_nr_2
                 MessageBox.Show("Za krótka nazwa obiektu (min 3 znaki)", "Dane");
                 return false;
             }
-            else if (int.Parse(tbNumberOFSteelJoints.Text) > 0)
+            else if (int.Parse(tbNumberOFSteelJoints.Text) <= 0)
             {
                 MessageBox.Show("Liczba zestawów nie może wynosić 0!", "Dane");
                 return false;
             }
-            else if (int.Parse(tbPiecesOfSteelJoints.Text) > 0)
+            else if (int.Parse(tbPiecesOfSteelJoints.Text) <= 0)
             {
                 MessageBox.Show("Liczba połączeń nie może wynosić 0!", "Dane");
                 return false;
@@ -168,6 +210,58 @@ namespace P4_projekt_nr_2
         private void cbBoltType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Console.WriteLine(cbBoltType.SelectedValue.ToString());
+        }
+
+        private void btDeletePosition_Click(object sender, RoutedEventArgs e)
+        {
+            IDCheckButtonEnabled();
+            myDB getPositions = new myDB();
+            getPositions.DeletePosition(SelectedIDSteelJoint);
+            MessageBox.Show("Usunięto obiekt!", "Usuwanie");
+            RefreshPosition();
+        }
+
+        private void btUpdatePosition_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataCheckPosition() == true)
+            {
+                IDCheckButtonEnabled();
+                BillOfMaterials updatePositionBOM = new BillOfMaterials()
+                {
+                    ID_Facility = DataTransfer.IDFacilityDT,
+                    ID_SteelJoint = SelectedIDSteelJoint,
+                    JointName = tbJointName.Text,
+
+                    ID_Bolt = int.Parse(cbBoltType.SelectedValue.ToString()),
+                    ID_Diameter = int.Parse(cbDiameterType.SelectedValue.ToString()),
+                    ID_Lenght = int.Parse(cbLenghtType.SelectedValue.ToString()),
+                    BoltWasherFirst = int.Parse(cbWasherFirstType.SelectedValue.ToString()),
+                    BoltWasherSecond = int.Parse(cbWasherSecondType.SelectedValue.ToString()),
+                    BoltWasherThird = int.Parse(cbWasherThirdType.SelectedValue.ToString()),
+                    ID_Nut = int.Parse(cbNutType.SelectedValue.ToString()),
+
+                    NumberOfSteelJoint = int.Parse(tbNumberOFSteelJoints.Text),
+                    PiecesOfSteelJoint = int.Parse(tbPiecesOfSteelJoints.Text)
+
+                };
+                myDB Positions = new myDB();
+                Positions.UpdatePosition(updatePositionBOM);
+                MessageBox.Show("Uaktualniono pozycje!", "Pozycja");
+                RefreshPosition();
+            }
+            else
+                MessageBox.Show("Sprawdź poprawność danych!");
+        }
+
+        private void btReturn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow newMainWindow = new MainWindow();
+            this.Visibility = Visibility.Hidden;
+            newMainWindow.Show();
+        }
+        void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="650" MinWidth="600" MinHeight="300">
+        Title="Obiekty budowlane" Height="300" Width="650" MinWidth="600" MinHeight="300">
     <Grid>
         <Grid VerticalAlignment="Stretch"  >
             <Grid.RowDefinitions>
@@ -35,12 +35,12 @@
 
             <StackPanel VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="2" >
                 <Button x:Name="btSelectObject" Content="Wybierz obiekt" Margin="10,10,10,5" HorizontalAlignment="Stretch" Click="btSelectObject_Click"/>
-                <Button x:Name="btExit" Content="Wyjście" Margin="10,10,10,5"  HorizontalAlignment="Stretch"/>
+                <Button x:Name="btExit" Content="Wyjście" Margin="10,10,10,5"  HorizontalAlignment="Stretch" Click="btExit_Click"/>
             </StackPanel>
 
 
             <Label Grid.Row="3" Grid.ColumnSpan="2" x:Name ="lTableName" Content="Lista obiektów (kliknij aby wybrać pozycje):" HorizontalAlignment="Center"/>
-            <DataGrid Grid.Row="3" Grid.ColumnSpan="2" Margin="10,25,10,10" x:Name="DGFacilityList" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionUnit="FullRow" SelectionChanged="DGFacilityList_SelectionChanged" IsReadOnly="True" >
+            <DataGrid Grid.Row="3" Grid.ColumnSpan="2" Margin="10,25,10,10" x:Name="DGFacilityList" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionUnit="FullRow" SelectionChanged="DGFacilityList_SelectionChanged" IsReadOnly="True" SelectionMode="Single" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID_Facility}" Width="40"/>
                     <DataGridTextColumn Header="Nazwa obiektu" Binding="{Binding Facility_Name}" Width="120" />

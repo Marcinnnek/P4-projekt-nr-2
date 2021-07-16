@@ -20,6 +20,9 @@ namespace P4_projekt_nr_2.DBservice
         public int ID_Nut { get; set; }
         public int NumberOfSteelJoint { get; set; }
         public int PiecesOfSteelJoint { get; set; }
+        public string WasherStandardWTF { get; set; }
+        public string WasherStandardWTS { get; set; }
+        public string WasherStandardWTT { get; set; }
 
         public int Kits => NumberOfSteelJoint * PiecesOfSteelJoint;
 
