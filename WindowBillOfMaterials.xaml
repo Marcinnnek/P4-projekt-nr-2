@@ -33,13 +33,13 @@
                 <DataGridTextColumn Header="Śruba" Binding="{Binding BoltStandard}"/>
                 <DataGridTextColumn Header="Średnica" Binding="{Binding Diameter}" />
                 <DataGridTextColumn Header="Długość" Binding="{Binding BoltLenght}"/>
-                <DataGridTextColumn Header="Podkładka -1-" Binding="{Binding WasherStandard}" />
+                <DataGridTextColumn Header="Podkładka -1-" Binding="{Binding Path=BoltWasherFirst.WasherStandard}" />
                 <DataGridTextColumn Header="Podkładka -2-" Binding="{Binding WasherStandard}" />
                 <DataGridTextColumn Header="Podkładka -3-" Binding="{Binding WasherStandard}" />
                 <DataGridTextColumn Header="Nakrętka" Binding="{Binding NutStandard}"/>
                 <DataGridTextColumn Header="Zestawy" Binding="{Binding NumberOfSteelJoint}" />
                 <DataGridTextColumn Header="Połączenia" Binding="{Binding PiecesOfSteelJoint}" />
-                <DataGridTextColumn Header="Łącznie" Binding="{Binding Kits}" Width="50"/>
+                <DataGridTextColumn Header="Łącznie" Binding="{Binding Kits}" Width="50" FontWeight="Bold"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -54,14 +54,14 @@
 
 
         <StackPanel Grid.Row="0" Grid.Column="2" >
-            <Button x:Name="btAddPosition" Content="Dodaj pozycje" Margin="10,5,10,5" HorizontalAlignment="Stretch"/>
+            <Button x:Name="btAddPosition" Content="Dodaj pozycje" Margin="10,5,10,5" HorizontalAlignment="Stretch" Click="btAddPosition_Click"/>
             <Button x:Name="btUpdatePosition" Content="Modyfikuj pozycje" Margin="10,5,10,5" HorizontalAlignment="Stretch"/>
             <Button x:Name="btDeletePosition" Content="Usuń pozycje" Margin="10,5,10,30" HorizontalAlignment="Stretch"/>
         </StackPanel>
 
 
         <TextBox Grid.Row="1" Grid.Column="2" x:Name="tbJointName" Text="Podaj nazwę połączenia!" HorizontalAlignment="Stretch" Margin="10,5,10,0" MaxLength="25" TextAlignment="Right" />
-        <ComboBox Grid.Row="2" Grid.Column="2" Margin="10,5,10,5" x:Name="cbBoltType" DisplayMemberPath="BoltStandard" SelectedValuePath="ID_Bolt" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
+        <ComboBox Grid.Row="2" Grid.Column="2" Margin="10,5,10,5" x:Name="cbBoltType" DisplayMemberPath="BoltStandard" SelectedValuePath="ID_Bolt" ItemsSource="{Binding}" SelectedIndex="0" SelectionChanged="cbBoltType_SelectionChanged"></ComboBox>
         <ComboBox Grid.Row="3" Grid.Column="2" Margin="10,5,10,5" x:Name="cbDiameterType" DisplayMemberPath="Diameter" SelectedValuePath="ID_Diameter" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
         <ComboBox Grid.Row="4" Grid.Column="2" Margin="10,5,10,5" x:Name="cbLenghtType" DisplayMemberPath="BoltLenght" SelectedValuePath="ID_Lenght" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>
         <ComboBox Grid.Row="5" Grid.Column="2" Margin="10,5,10,5" x:Name="cbNutType" DisplayMemberPath="NutStandard" SelectedValuePath="ID_Nut" ItemsSource="{Binding}" SelectedIndex="0"></ComboBox>

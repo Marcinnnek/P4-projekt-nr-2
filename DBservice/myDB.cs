@@ -50,7 +50,7 @@ namespace P4_projekt_nr_2.DBservice
                     myDBconnection.Open();
                 var result = myDBconnection.Execute("UPDATE BAN.Facility SET Facility_Name = @Name , FacilityDescription = @Description, SAP = @Sap WHERE ID_Facility = @IDf",
                     new
-                    {   
+                    {
                         IDf = ObiektB.ID_Facility,
                         Name = ObiektB.Facility_Name,
                         DESCRIPTION = ObiektB.FacilityDescription,
@@ -142,7 +142,50 @@ namespace P4_projekt_nr_2.DBservice
                                                                     INNER JOIN BAN.WasherType AS WTF ON BOM.BoltWasherFirst=WTF.ID_Washer
                                                                     INNER JOIN BAN.WasherType AS WTS ON BOM.BoltWasherSecond=WTS.ID_Washer
                                                                     INNER JOIN BAN.WasherType AS WTT ON BOM.BoltWasherThird=WTT.ID_Washer
-                                                                    WHERE BOM.ID_Facility=@IDf", new { IDf = IDfacility}).ToList();
+                                                                    WHERE BOM.ID_Facility=@IDf", new { IDf = IDfacility }).ToList();
+            }
+        }
+
+
+        public bool InsterPosition(BillOfMaterials pos)
+        {
+            using (IDbConnection dbConnection = myDBconnection)
+            {
+                if (myDBconnection.State == ConnectionState.Closed)
+                    myDBconnection.Open();
+                var result = myDBconnection.Execute(@"INSERT INTO BAN.BillOfMaterials (
+                                                    ID_Facility, 
+                                                    JointName, 
+                                                    ID_Bolt, 
+                                                    ID_Diameter, 
+                                                    ID_Lenght, 
+                                                    BoltWasherFirst, 
+                                                    BoltWasherSecond, 
+                                                    BoltWasherThird, 
+                                                    ID_Nut, 
+                                                    NumberOfSteelJoint, 
+                                                    PiecesOfSteelJoint
+                                                    ) 
+                                                    VALUES (@IDf, @Name, @IDb, @IDd, @IDl, @BWF, @BWS, @BWT, @IDn, @NOSJ, @POSJ)",
+                    new
+                    {
+                        IDf = pos.ID_Facility,
+                        Name = pos.JointName,
+                        IDb = pos.ID_Bolt,
+                        IDd = pos.ID_Diameter,
+                        IDl = pos.ID_Lenght,
+                        BWF = pos.BoltWasherFirst,
+                        BWS = pos.BoltWasherSecond,
+                        BWT = pos.BoltWasherThird,
+                        IDn = pos.ID_Nut,
+                        NOSJ = pos.NumberOfSteelJoint,
+                        POSJ = pos.PiecesOfSteelJoint
+                        //Name = ObiektB.Facility_Name,
+                        //DESCRIPTION = ObiektB.FacilityDescription,
+                        //SAP = ObiektB.SAP
+                    });
+
+                return result == 1;
             }
         }
     }

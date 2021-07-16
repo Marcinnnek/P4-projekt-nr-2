@@ -20,7 +20,7 @@ namespace P4_projekt_nr_2
     /// </summary>
     public partial class WindowBillOfMaterials : Window
     {
-        private int SelectedIDSteelJoint =0;
+        private int SelectedIDSteelJoint = 0;
         public WindowBillOfMaterials()
         {
             InitializeComponent();
@@ -78,7 +78,7 @@ namespace P4_projekt_nr_2
             myDB getMaterials = new myDB();
             cbWasherThirdType.ItemsSource = cbWasherSecondType.ItemsSource = cbWasherFirstType.ItemsSource = getMaterials.GetWasherType();
         }
-        
+
         private void RefreshPosition()
         {
             myDB getPosition = new myDB();
@@ -110,6 +110,64 @@ namespace P4_projekt_nr_2
             }
 
             IDCheckButtonEnabled();
+        }
+
+        private void btAddPosition_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataCheckPosition() == true)
+            {
+                IDCheckButtonEnabled();
+                BillOfMaterials newPositionBOM = new BillOfMaterials()
+                {
+                    ID_Facility = DataTransfer.IDFacilityDT,
+
+                    JointName = tbJointName.Text,
+
+                    ID_Bolt = int.Parse(cbBoltType.SelectedValue.ToString()),
+                    ID_Diameter = int.Parse(cbDiameterType.SelectedValue.ToString()),
+                    ID_Lenght = int.Parse(cbLenghtType.SelectedValue.ToString()),
+                    BoltWasherFirst = int.Parse(cbWasherFirstType.SelectedValue.ToString()),
+                    BoltWasherSecond = int.Parse(cbWasherSecondType.SelectedValue.ToString()),
+                    BoltWasherThird = int.Parse(cbWasherThirdType.SelectedValue.ToString()),
+                    ID_Nut = int.Parse(cbNutType.SelectedValue.ToString()),
+
+                    NumberOfSteelJoint = int.Parse(tbNumberOFSteelJoints.Text),
+                    PiecesOfSteelJoint = int.Parse(tbPiecesOfSteelJoints.Text)
+
+                };
+
+                myDB getPositions = new myDB();
+                getPositions.InsterPosition(newPositionBOM);
+                MessageBox.Show("Dodano nową pozycje!", "Pozycja");
+                RefreshPosition();
+            }
+            else
+                MessageBox.Show("Sprawdź poprawność danych!");
+        }
+
+        private bool DataCheckPosition()
+        {
+            if (tbJointName.Text.Length <= 3)
+            {
+                MessageBox.Show("Za krótka nazwa obiektu (min 3 znaki)", "Dane");
+                return false;
+            }
+            else if (int.Parse(tbNumberOFSteelJoints.Text) > 0)
+            {
+                MessageBox.Show("Liczba zestawów nie może wynosić 0!", "Dane");
+                return false;
+            }
+            else if (int.Parse(tbPiecesOfSteelJoints.Text) > 0)
+            {
+                MessageBox.Show("Liczba połączeń nie może wynosić 0!", "Dane");
+                return false;
+            }
+            return true;
+        }
+
+        private void cbBoltType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Console.WriteLine(cbBoltType.SelectedValue.ToString());
         }
     }
 }
